@@ -1,0 +1,1402 @@
+\documentclass[12pt]{book}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{mhchem}
+\usepackage{chemfig}
+\usepackage{multicol}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, decorations.pathreplacing, calc}
+\usepackage{tikz-feynman}
+\tikzfeynmanset{compat=1.1.0}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+
+\newcommand{\codesymbol}[2]{%
+  \begin{codesymbolbox}
+    \texttt{#1} \hfill \(#2\)
+  \end{codesymbolbox}
+}
+
+\geometry{margin=1in}
+\onehalfspacing
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE,RO]{\thepage}
+\fancyhead[RE]{\leftmark}
+\fancyhead[LO]{\rightmark}
+
+\title{\LaTeX{}: A Guide for the Curious Physicist}
+\author{Nishtha Tikalal}
+\date{} % This removes the date
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\cleardoublepage
+\thispagestyle{empty}
+\vspace*{\fill}
+
+\begin{center}
+    \textcopyright\ \the\year\ Nishtha Tikalal
+
+    \vspace{1em}
+
+    This work is licensed under the\\
+    \textbf{Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License.}
+
+    \vspace{1em}
+
+    To view a copy of this license, visit\\
+    \url{https://creativecommons.org/licenses/by-nc-sa/4.0/}
+\end{center}
+
+\vspace*{\fill}
+\cleardoublepage
+\tableofcontents
+
+\mainmatter
+
+\chapter{Why \LaTeX{} for Physics?}
+
+\section{Physics Needs Precision: Why \LaTeX{}?}
+
+Physics is inherently mathematical, symbolic, and visual. LaTeX is built for this world — allowing you to:
+
+\begin{itemize}
+    \item Write precise equations like Maxwell’s or Schrödinger’s
+    \item Label vectors, units, and derivatives cleanly
+    \item Create professional plots, diagrams, and models
+    \item Reference figures and formulas with accuracy
+\end{itemize}
+
+\section{Why Word Processors Fail for Physics}
+
+Word processors are designed for prose, not precision. They struggle with:
+
+\begin{itemize}
+    \item Alignment and labeling of multi-line equations
+    \item Complex symbols like $\nabla$, $\hat{x}$, or $\sum_{n=1}^\infty$
+    \item Drawing force diagrams or Feynman diagrams cleanly
+    \item Consistent formatting for units, references, or citations
+\end{itemize}
+
+\textbf{LaTeX wins because it is a language of structure, not style.}
+
+\section{What You’ll Learn in This Book}
+
+This book shows you how to:
+
+\begin{itemize}
+    \item Typeset equations and derivations
+    \item Draw physics diagrams: free body, vector fields, Feynman diagrams
+    \item Use color and overlays to explain motion and forces
+    \item Format reports and presentations professionally
+    \item Cite physics sources from arXiv, journals, and conferences
+\end{itemize}
+
+Each chapter ends with tips and LaTeX code you can copy, modify, and deploy.
+
+\section{Getting Started: Overleaf and Offline Tools}
+
+\subsection*{Option A: Overleaf (Recommended)}
+
+\begin{itemize}
+    \item Free, browser-based LaTeX editor
+    \item Auto-compiles and supports collaboration
+    \item Supports `tikz-feynman`, `physics`, `pgfplots`, etc.
+\end{itemize}
+
+\texttt{\url{https://overleaf.com}}
+
+\subsection*{Option B: Offline Installation}
+
+\begin{itemize}
+    \item Install a TeX distribution (TeX Live, MiKTeX, MacTeX)
+    \item Use an editor: TeXstudio, VSCode + LaTeX Workshop, etc.
+\end{itemize}
+
+\section{Your First Physics Document}
+
+Try this in Overleaf:
+
+\begin{verbatim}
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{physics}
+\begin{document}
+
+Newton’s Second Law:
+
+\[
+\vb{F} = m\vb{a}
+\]
+
+\end{document}
+\end{verbatim}
+
+\[
+\vb{F} = m\vb{a}
+\]
+
+\subsection*{Try This!}
+\begin{itemize}
+    \item Change the equation to \(\vb{p} = m\vb{v}\)
+    \item Add a title and your name
+    \item Use `\texttt{\textbackslash physics}` for derivatives and vectors
+\end{itemize}
+
+\section*{What’s Next}
+
+Now that you know why LaTeX is powerful for physics, Chapter 2 will show you how to write clean, professional equations — from classical mechanics to quantum theory.
+
+\chapter{Writing Equations and Formulas in Physics}
+
+\section{Math Mode Review for Physicists}
+
+Use dollar signs \verb|$...$| or \verb|\[...\]| to enter math mode.
+
+\begin{itemize}
+    \item Inline: \verb|$E = mc^2$| → $E = mc^2$
+    \item Display: \verb|\[ E = mc^2 \]| →
+    \[
+    E = mc^2
+    \]
+\end{itemize}
+
+Use \verb|\text| inside equations for units and labels:  
+\verb|$F = 10\ \text{N}$| → $F = 10\ \text{N}$
+
+\section{Kinematic Equations, Energy, Momentum}
+
+\begin{align*}
+v &= v_0 + at \\
+x &= x_0 + v_0t + \frac{1}{2}at^2 \\
+F &= ma \\
+K &= \frac{1}{2}mv^2 \\
+p &= mv
+\end{align*}
+
+Use \texttt{amsmath}’s \verb|align| or \verb|equation| for clean formatting.
+
+\section{Vectors, Greek Letters, and Operators}
+
+Load the \texttt{physics} package:
+
+\begin{verbatim}
+\usepackage{physics}
+\end{verbatim}
+
+\begin{itemize}
+    \item Vectors: \verb|\vb{F}| → $\vb{F}$
+    \item Unit vectors: \verb|\vu{x}| → $\vu{x}$
+    \item Derivatives: \verb|\dv{y}{x}| → $\dv{y}{x}$
+    \item Partial derivatives: \verb|\pdv{f}{x}| → $\pdv{f}{x}$,
+          \verb|\pdv[2]{f}{x}| → $\pdv[2]{f}{x}$
+    \item Greek: \verb|\theta| → $\theta$, \verb|\psi| → $\psi$
+\end{itemize}
+
+\section{Gradient, Divergence, and Curl}
+
+\begin{align*}
+\grad{\phi} &= \nabla \phi \\
+\div{\vb{F}} &= \nabla \cdot \vb{F} \\
+\curl{\vb{F}} &= \nabla \times \vb{F}
+\end{align*}
+
+Symbols and commands:
+\begin{itemize}
+    \item \verb|\nabla| → $\nabla$
+    \item \verb|\div{}| → $\div{\vb{F}}$
+    \item \verb|\curl{}| → $\curl{\vb{F}}$
+    \item \verb|\grad{}| → $\grad{\phi}$
+\end{itemize}
+
+\section{Dot and Cross Products}
+
+\begin{itemize}
+    \item Dot: \verb|\vb{A} \cdot \vb{B}| → $\vb{A} \cdot \vb{B}$
+    \item Cross: \verb|\vb{A} \times \vb{B}| → $\vb{A} \times \vb{B}$
+\end{itemize}
+
+Example (Lorentz Force):
+\[
+\vb{F} = q\vb{E} + q\vb{v} \times \vb{B}
+\]
+
+\section{Summation, Limits, and Integrals}
+
+\begin{itemize}
+    \item Summation: \verb|\sum_{n=1}^\infty a_n| → $\sum_{n=1}^\infty a_n$
+    \item Limit: \verb|\lim_{x \to 0} \frac{\sin x}{x}| → $\lim_{x \to 0} \frac{\sin x}{x}$
+    \item Integral: \verb|\int_0^L \vb{F} \cdot d\vb{x}| → $\int_0^L \vb{F} \cdot d\vb{x}$
+    \item Double integral: \verb|\iint|, Triple: \verb|\iiint|
+\end{itemize}
+
+\[
+\int_0^\infty e^{-x^2} \dd{x} = \frac{\sqrt{\pi}}{2}
+\]
+
+\section{Display Equations with Numbering}
+
+Use `equation` for numbering:
+
+\begin{verbatim}
+\begin{equation}
+    \nabla \cdot \vb{E} = \frac{\rho}{\varepsilon_0}
+\end{equation}
+\end{verbatim}
+
+\begin{equation}
+    \nabla \cdot \vb{E} = \frac{\rho}{\varepsilon_0}
+\end{equation}
+
+\section*{Try This!}
+
+\begin{itemize}
+    \item Write Gauss’s Law, Ampère’s Law, and Faraday’s Law
+    \item Use `align` to list the four Maxwell equations
+    \item Try partial derivatives for the Lagrangian $\mathcal{L}(q, \dot{q}, t)$
+\end{itemize}
+
+\section*{Lab Tip}
+
+Use \texttt{physics} macros consistently — they reduce errors and improve readability. Use \verb|\si{}| for all physical units and label equations with \verb|\label{eq:}| for referencing.
+
+\section*{What’s Next}
+
+In Chapter 3, we’ll model real physical systems — projectiles, pendulums, oscillators — and learn how to align derivations in structured formats.
+
+\chapter{Modeling Physical Systems}
+
+\section{Projectile Motion and Trajectories}
+
+Use `align` to display kinematic equations:
+
+\begin{align*}
+x(t) &= v_0 \cos\theta \cdot t \\
+y(t) &= v_0 \sin\theta \cdot t - \frac{1}{2}gt^2
+\end{align*}
+
+To draw a simple path:
+
+\begin{verbatim}
+\usepackage{tikz}
+\begin{tikzpicture}[scale=0.8]
+\draw[->] (0,0) -- (5,0) node[right] {$x$};
+\draw[->] (0,0) -- (0,3) node[above] {$y$};
+\draw[domain=0:4, smooth, variable=\x, thick] 
+    plot ({\x}, {2*\x - 0.5*9.8*(\x/2)^2});
+\end{tikzpicture}
+\end{verbatim}
+
+\section{The Bullet-and-Block Problem}
+
+Use `cases` for piecewise outcomes:
+
+\begin{equation}
+v_f =
+\begin{cases}
+\displaystyle \frac{mv}{m+M} & \text{(perfectly inelastic)} \\
+\text{solve from conservation} & \text{(elastic)}
+\end{cases}
+\end{equation}
+
+\section{Spring-Mass and Pendulum Systems}
+
+Hooke’s Law and Newton’s 2nd Law:
+
+\[
+m\ddot{x} + kx = 0
+\]
+
+Solution:
+
+\[
+x(t) = A \cos(\omega t + \phi), \quad \omega = \sqrt{\frac{k}{m}}
+\]
+
+Pendulum (small-angle approximation):
+
+\[
+\theta(t) = \theta_0 \cos\left(\sqrt{\frac{g}{\ell}} t \right)
+\]
+
+\section{Damped Oscillators and Driven Systems}
+
+\textbf{Damped oscillator:}
+
+\[
+m\ddot{x} + b\dot{x} + kx = 0
+\]
+
+\textbf{Driven oscillator:}
+
+\[
+m\ddot{x} + b\dot{x} + kx = F_0 \cos(\omega t)
+\]
+
+Use `\dv{x}{t}` or `\ddot{x}` from \texttt{physics} for clarity.
+
+\section{Aligning and Annotating Derivations with \texttt{align}}
+
+Use `align` to show step-by-step reasoning:
+
+\begin{align}
+F_{\text{net}} &= T - mg \\
+ma &= T - mg \\
+T &= m(a + g)
+\end{align}
+
+Use `\text{}` for in-line annotations.
+
+\section*{Diagrams for Physical Models}
+
+\subsection*{Simple Harmonic Oscillator (Mass on Spring)}
+
+\begin{center}
+\begin{tikzpicture}
+  \draw[thick] (0,0) -- (0,3); % wall
+  \draw[decorate,decoration={coil,aspect=0.5,segment length=3mm,amplitude=4mm}] 
+    (0,0) -- (3,0); % spring
+  \draw[fill=gray!20] (3,-0.5) rectangle (4,0.5); % block
+  \node at (3.5, -0.8) {$m$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Simple Pendulum}
+
+\begin{center}
+\begin{tikzpicture}
+  \draw[thick] (0,0) -- (3,-2.5);
+  \filldraw[fill=gray!30] (3,-2.5) circle (0.3);
+  \draw[dashed] (0,0) -- (3,0);
+  \draw (1.5,-1.25) node[above right] {$\theta$};
+  \node at (3.3,-2.5) {$m$};
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Bullet and Block}
+
+\begin{center}
+\begin{tikzpicture}
+  \draw[fill=gray!40] (0,0) rectangle (1,0.6); % bullet
+  \draw[fill=blue!20] (3,0) rectangle (5,1.5); % block
+  \draw[thick] (5,0) -- (7,0); % ground
+  \node at (0.5,0.8) {bullet};
+  \node at (4,1.7) {block (mass M)};
+  \draw[->, thick] (-0.5,0.3) -- (0,0.3) node[midway, above] {$v$};
+\end{tikzpicture}
+\end{center}
+
+\section*{Try This!}
+
+\begin{itemize}
+    \item Derive time of flight, max height, and range of a projectile
+    \item Use `align` to show a step-by-step derivation for SHM
+    \item Sketch a damped oscillator response and label amplitude decay
+\end{itemize}
+
+\section*{Lab Tip}
+
+Use `\SI{}{}` to keep all reported values with consistent units. Use TikZ to sketch experimental setups and help communicate your assumptions and models clearly.
+
+\section*{What’s Next}
+
+In Chapter 4, we’ll transition from equations to illustrations — learning to draw free-body diagrams, coordinate systems, and vector fields using `tikz`.
+
+\chapter{Diagrams and Visual Models in Physics}
+
+\section{Using \texttt{tikz} for Physics Figures}
+
+Add TikZ to your preamble:
+
+\begin{verbatim}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta, decorations.pathreplacing, calc}
+\end{verbatim}
+
+Start any drawing with:
+
+\begin{verbatim}
+\begin{tikzpicture}
+  % your drawing
+\end{tikzpicture}
+\end{verbatim}
+
+\section{Drawing Free Body Diagrams}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.0]
+  \draw[fill=gray!30] (0,0) rectangle (2,1);
+  \draw[->, thick] (1,0.5) -- (1,-1) node[right] {$mg$};
+  \draw[->, thick] (1,0.5) -- (1,2) node[right] {$N$};
+  \draw[->, thick] (1,0.5) -- (3,0.5) node[above] {$F$};
+  \node at (1,0.5) {$\bullet$};
+\end{tikzpicture}
+\end{center}
+
+\section{Inclined Planes, Tension, and Pulley Systems}
+
+\begin{center}
+\begin{tikzpicture}
+  \draw[thick, rotate=30] (0,0) rectangle (2,1);
+  \draw[thick] (0,-0.5) -- (5,0); % ground
+  \draw[->, thick] (1.5,0.5) -- ++(0,-1.5) node[right] {$mg$};
+  \draw[->, thick] (1.5,0.5) -- ++(1,0.58) node[above] {$N$};
+  \draw[->, thick] (1.5,0.5) -- ++(1.2,-0.7) node[below] {$F_{\text{fric}}$};
+\end{tikzpicture}
+\end{center}
+
+\section{2D/3D Coordinate Systems and Vector Fields}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.1,>=Stealth]
+  \draw[->] (0,0) -- (4,0) node[right] {$x$};
+  \draw[->] (0,0) -- (0,3) node[above] {$y$};
+  \draw[->] (0,0) -- (-1.5,-1) node[below] {$z$};
+  \draw[->, red] (0,0) -- (2,1.5) node[right] {$\vb{v}$};
+\end{tikzpicture}
+\end{center}
+
+\section{Highlighting with \texttt{xcolor} and Overlays}
+
+Add:
+
+\begin{verbatim}
+\usepackage{xcolor}
+\end{verbatim}
+
+To color elements:
+
+\begin{itemize}
+    \item \verb|\textcolor{blue}{force}| → \textcolor{blue}{force}
+    \item \verb|\draw[red,->]| for arrows
+\end{itemize}
+
+\subsection*{Example:}
+
+\begin{tikzpicture}
+  \draw[->, thick, red] (0,0) -- (3,1) node[right] {$\vb{E}$};
+  \draw[->, thick, blue] (0,0) -- (-1.5,2) node[above left] {$\vb{B}$};
+\end{tikzpicture}
+
+\section*{Try This!}
+
+\begin{itemize}
+    \item Draw a 2-block pulley system
+    \item Add friction arrows to an inclined block
+    \item Create a field map with arrows using a `for` loop in TikZ
+\end{itemize}
+
+\section*{Lab Tip}
+
+Use `node` labels for clean vector naming. Align force vectors from the object's center, and use consistent angle conventions.
+
+\section*{What’s Next}
+
+In Chapter 5, we’ll dive into drawing quantum field theory visuals with `tikz-feynman`, including real Feynman diagrams for QED.
+
+\chapter{Feynman Diagrams and Quantum Field Visuals}
+
+\section{Introduction to Feynman Diagrams}
+
+Feynman diagrams visually represent particle interactions in QFT. LaTeX offers a clean and professional way to render them using `tikz-feynman`.
+
+\section{Installing and Using \texttt{tikz-feynman}}
+
+Add to your preamble:
+
+\begin{verbatim}
+\usepackage{tikz-feynman}
+\tikzfeynmanset{compat=1.1.0}
+\end{verbatim}
+
+You may also need:
+
+\begin{verbatim}
+\usepackage{tikz}
+\usepackage[compat=1.0.0]{tikz-feynman}
+\end{verbatim}
+
+\section{Fermion and Boson Lines: Syntax and Styles}
+
+\begin{verbatim}
+\feynmandiagram [horizontal=a to b] {
+  i1 [particle=\(e^-\)] -- [fermion] a -- [fermion] i2 [particle=\(e^+\)],
+  a -- [photon] b,
+  f1 [particle=\(\mu^-\)] -- [fermion] b -- [fermion] f2 [particle=\(\mu^+\)],
+};
+\end{verbatim}
+
+\[
+\feynmandiagram [horizontal=a to b] {
+  i1 [particle=\(e^-\)] -- [fermion] a -- [fermion] i2 [particle=\(e^+\)],
+  a -- [photon] b,
+  f1 [particle=\(\mu^-\)] -- [fermion] b -- [fermion] f2 [particle=\(\mu^+\)],
+};
+\]
+
+\section{Basic QED Scattering: \(\mathbf{e^+ e^- \rightarrow \mu^+ \mu^-}\)}
+
+This represents electron–positron annihilation into a muon–antimuon pair.
+
+\section{Loops, Vertices, and Complex Interactions}
+
+Example with a loop:
+
+\begin{verbatim}
+\feynmandiagram [layered layout, horizontal=a to b] {
+  a -- [fermion] b -- [fermion] c -- [fermion] a,
+  b -- [photon, out=45, in=135, loop, min distance=2cm] b,
+};
+\end{verbatim}
+
+\section{Labeling Particles, Momenta, and Time Direction}
+
+\begin{itemize}
+    \item Use \verb|particle=\(e^-\)| to label lines
+    \item Arrows indicate time direction
+    \item Use `momentum=\(p\)` to annotate lines
+\end{itemize}
+
+\section{Advanced Styling: Curves, Loops, Momentum Arrows}
+
+\begin{verbatim}
+\feynmandiagram [horizontal=a to b] {
+  a -- [fermion, momentum=\(p\)] b -- [photon, edge label=\(\gamma\)] c,
+};
+\end{verbatim}
+
+You can customize:
+
+\begin{itemize}
+    \item \verb|out| and \verb|in| angles for curved lines
+    \item Use `edge label`, `momentum'`, and color for clarity
+\end{itemize}
+
+\section*{Try This!}
+
+\begin{itemize}
+    \item Create a t-channel diagram
+    \item Add a loop with a virtual photon
+    \item Label all external particles and include momenta
+\end{itemize}
+
+\section*{Lab Tip}
+
+For journal-quality diagrams, export TikZ pictures standalone and compile them into figures. Always use `compat` with your Overleaf version.
+
+\section*{What’s Next}
+
+In Chapter 6, we return to classical vector tools — exploring coordinate systems, vector diagrams, and component notation.
+
+\chapter{Vectors and Coordinate Systems}
+
+\section{Vectors in Component Form}
+
+Use `\vb{}` to denote vectors and `\begin{bmatrix}...\end{bmatrix}` for component layout:
+
+\begin{align*}
+\vb{A} &= A_x \vu{i} + A_y \vu{j} + A_z \vu{k} \\
+\vb{r} &= \begin{bmatrix} x \\ y \\ z \end{bmatrix}
+\end{align*}
+
+\subsection*{In 2D:}
+
+\[
+\vb{v} = \begin{bmatrix} 3 \\ 4 \end{bmatrix}, \quad |\vb{v}| = \sqrt{3^2 + 4^2} = 5
+\]
+
+\section{Using the \texttt{physics} Package for Vectors}
+
+The `physics` package simplifies derivatives, vector arrows, and unit vectors:
+
+\begin{itemize}
+    \item \verb|\vb{v}| → $\vb{v}$
+    \item \verb|\vu{x}| → $\vu{x}$
+    \item \verb|\grad{f}| → $\grad{f}$
+    \item \verb|\div{\vb{E}}| → $\div{\vb{E}}$
+    \item \verb|\curl{\vb{B}}| → $\curl{\vb{B}}$
+\end{itemize}
+
+\section{Drawing Vector Addition and Resolution}
+
+\begin{center}
+\begin{tikzpicture}[scale=1.2,>=Stealth]
+  \draw[->, thick] (0,0) -- (3,0) node[below right] {$\vb{A}$};
+  \draw[->, thick] (3,0) -- (3,2) node[right] {$\vb{B}$};
+  \draw[->, thick, blue] (0,0) -- (3,2) node[above left] {$\vb{A} + \vb{B}$};
+\end{tikzpicture}
+\end{center}
+
+Use vector triangles or parallelograms to show composition.
+
+\section{Polar and Spherical Coordinates}
+
+\subsection*{Polar:}
+
+\[
+x = r \cos\theta, \quad y = r \sin\theta
+\]
+
+\subsection*{Spherical:}
+
+\[
+x = r \sin\theta \cos\phi, \quad y = r \sin\theta \sin\phi, \quad z = r \cos\theta
+\]
+
+\subsection*{Vector in Spherical Form:}
+
+\[
+\vb{E} = E_r \vu{r} + E_\theta \vu{\theta} + E_\phi \vu{\phi}
+\]
+
+Use $\vu{r}$, $\vu{\theta} $ to denote directional unit vectors.
+
+\section*{Try This!}
+
+\begin{itemize}
+    \item Break a vector into components on an incline
+    \item Draw a 3D coordinate system with labeled axes
+    \item Convert between Cartesian and spherical vector representations
+\end{itemize}
+
+\section*{Lab Tip}
+
+Use `tikz` to visually verify directionality and component breakdowns. Highlight angles and axes using `\draw[dashed]` and node labels.
+
+\section*{What’s Next}
+
+In Chapter 7, we’ll explore how to visualize physical quantities dynamically — from motion graphs to potential wells and multicolor field plots.
+
+\chapter{Visualizing Motion and Change}
+
+\section{Graphing Motion with \texttt{pgfplots}}
+
+Load the package in your preamble:
+
+\begin{verbatim}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\end{verbatim}
+
+\subsection*{Example: Position vs. Time}
+
+\begin{verbatim}
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    xlabel={$t$ (s)},
+    ylabel={$x(t)$ (m)},
+    domain=0:5,
+    samples=100,
+]
+\addplot[blue, thick] {3*x + 0.5*x^2};
+\end{axis}
+\end{tikzpicture}
+\end{verbatim}
+
+\section{Visualizing Trajectories Over Time}
+
+Use parametric plots for curved paths:
+
+\begin{verbatim}
+\begin{tikzpicture}
+\begin{axis}[axis lines=middle, xlabel=$x$, ylabel=$y$]
+\addplot[domain=0:5, samples=100, thick] 
+    ({x}, {2*x - 0.5*9.8*(x/2)^2});
+\end{axis}
+\end{tikzpicture}
+\end{verbatim}
+
+This simulates projectile motion.
+
+\section{Phase Diagrams and Potential Energy Wells}
+
+\subsection*{SHM Phase Diagram:}
+
+\[
+\frac{1}{2}mv^2 + \frac{1}{2}kx^2 = E
+\]
+
+\begin{tikzpicture}
+\begin{axis}[xlabel=$x$, ylabel=$v$, axis lines=middle]
+\addplot[domain=-2:2, samples=100, thick, blue] 
+    ({x}, {sqrt(4 - x^2)});
+\addplot[domain=-2:2, samples=100, thick, blue] 
+    ({x}, {-sqrt(4 - x^2)});
+\end{axis}
+\end{tikzpicture}
+
+\subsection*{Potential Energy Well:}
+
+\begin{tikzpicture}
+\begin{axis}[xlabel=$x$, ylabel=$U(x)$, axis lines=middle]
+\addplot[domain=-2:2, samples=100, thick] {x^4 - 2*x^2};
+\end{axis}
+\end{tikzpicture}
+
+\section{Multicolor Paths and Overlays}
+
+You can split plots with color stages:
+
+\begin{verbatim}
+\addplot[red, domain=0:2] {f(x)};
+\addplot[blue, domain=2:4] {f(x)};
+\end{verbatim}
+
+Or use `nodes near coords` to annotate turning points.
+
+\section*{Try This!}
+
+\begin{itemize}
+    \item Plot a pendulum’s angle over time
+    \item Create a multistage graph showing motion segments
+    \item Visualize escape velocity as a potential graph
+\end{itemize}
+
+\section*{Lab Tip}
+
+Use `axis lines=middle` and gridlines for clarity. Normalize units if plotting across different physical domains (e.g., energy vs. position).
+
+\section*{What’s Next}
+
+In Chapter 8, we’ll refine visual design using `xcolor`, themes, and styles — to create professional documents and presentations.
+
+\chapter{Using Colors and Styles in Physics Documents}
+
+\section{The \texttt{xcolor} Package and Color Design}
+
+Add the package to your preamble:
+
+\begin{verbatim}
+\usepackage{xcolor}
+\end{verbatim}
+
+\subsection*{Example Usage:}
+
+\begin{itemize}
+    \item \verb|\textcolor{red}{energy}| → \textcolor{red}{energy}
+    \item \verb|\color{blue} F = ma| → {\color{blue} $F = ma$}
+    \item Custom color: \verb|\definecolor{mygray}{gray}{0.7}|
+\end{itemize}
+
+\section{Coloring Forces and Highlighting Arrows}
+
+Color-coded force diagrams improve legibility:
+
+\begin{tikzpicture}
+  \draw[fill=gray!20] (0,0) rectangle (2,1);
+  \draw[->, thick, red] (1,0.5) -- (1,-1) node[right] {\textcolor{red}{$mg$}};
+  \draw[->, thick, green] (1,0.5) -- (1,2) node[right] {\textcolor{green}{$N$}};
+  \draw[->, thick, blue] (1,0.5) -- (3,0.5) node[above] {\textcolor{blue}{$F$}};
+\end{tikzpicture}
+
+\section{Shading Areas Under Curves}
+
+Using `fill` in TikZ:
+
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    xlabel={$x$}, ylabel={$f(x)$},
+    domain=0:2,
+]
+\addplot[fill=blue!20, domain=0:2] {x^2} \closedcycle;
+\addplot[blue, thick] {x^2};
+\end{axis}
+\end{tikzpicture}
+
+This visually emphasizes the integral or work done.
+
+\section{Presentation-ready Aesthetics}
+
+Use consistent color themes:
+
+\begin{itemize}
+    \item Titles and headings in `blue!70!black`
+    \item Vectors in `red`, fields in `blue`
+    \item Shaded potentials with `gray!30`
+\end{itemize}
+
+You can also define reusable styles:
+
+\begin{verbatim}
+\tikzset{force/.style={->, thick, color=red}}
+\tikzset{vector/.style={->, thick, blue}}
+\end{verbatim}
+
+\section*{Try This!}
+
+\begin{itemize}
+    \item Shade a velocity-time graph area (displacement)
+    \item Color electric field lines differently than magnetic ones
+    \item Apply custom styles to plot segments
+\end{itemize}
+
+\section*{Lab Tip}
+
+Avoid overusing bright colors — use desaturated tones (e.g., `blue!40!white`) for diagrams. Use color primarily to distinguish concepts or forces.
+
+\section*{What’s Next}
+
+In Chapter 9, you’ll learn how to format physics lab reports and research papers with proper structure, equations, and citations.
+
+\chapter{Writing Lab Reports and Scientific Papers}
+
+\section{Physics Report Structure}
+
+A good report includes:
+
+\begin{itemize}
+    \item Title and Abstract
+    \item Introduction and Theory
+    \item Experimental Method
+    \item Data and Analysis
+    \item Conclusion and References
+\end{itemize}
+
+\section{Basic Document Setup}
+
+\begin{verbatim}
+\documentclass[12pt]{article}
+\usepackage{amsmath, siunitx, graphicx, physics}
+\usepackage{caption}
+\title{Conservation of Energy in a Pendulum}
+\author{Nishtha Tikalal}
+\date{\today}
+\end{verbatim}
+
+Use `\section{}` and `\subsection{}` to structure content.
+
+\section{Tables, Units, and Error Propagation}
+
+Use `siunitx` to present measurements and uncertainties:
+
+\begin{verbatim}
+\begin{tabular}{|c|c|}
+\hline
+Mass (g) & Time (s) \\
+\hline
+\SI{100.0 \pm 0.5}{\gram} & \SI{2.34 \pm 0.03}{\second} \\
+\hline
+\end{tabular}
+\end{verbatim}
+
+For error propagation:
+
+\[
+\Delta T = \sqrt{\left(\frac{\partial T}{\partial x} \Delta x \right)^2 + \left(\frac{\partial T}{\partial y} \Delta y \right)^2}
+\]
+
+\section{Incorporating Experimental Diagrams}
+
+Insert figures:
+
+\begin{verbatim}
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.5\textwidth]{pendulum_setup.png}
+\caption{Experimental setup for the simple pendulum}
+\label{fig:pendulum}
+\end{figure}
+\end{verbatim}
+
+Refer with:  
+\verb|As seen in Figure~\ref{fig:pendulum}...|
+
+\section{Referencing Figures and Equations}
+
+\begin{itemize}
+    \item Use \verb|\label{}| and \verb|\ref{}| to refer back
+    \item Numbered equations: \verb|\begin{equation}...\end{equation}|
+    \item Add references to published results or constants using `biblatex`
+\end{itemize}
+
+\section*{Try This!}
+
+\begin{itemize}
+    \item Write a full lab report on projectile motion
+    \item Include one table, one graph, one error analysis, and one diagram
+    \item Use `align` to derive an energy equation
+\end{itemize}
+
+\section*{Lab Tip}
+
+Use separate `.tex` files for sections (e.g., `intro.tex`, `data.tex`) and `\input{}` them. Maintain a shared `.bib` file for citations.
+
+\section*{What’s Next}
+
+In Chapter 10, you’ll learn how to present physics visually using `beamer` — ideal for slides, lectures, and defense presentations.
+
+\chapter{Presenting Physics with Beamer}
+
+\section{Physics Slide Templates}
+
+Basic slide setup:
+
+\begin{verbatim}
+\documentclass{beamer}
+\usepackage{amsmath, physics, tikz}
+\usetheme{CambridgeUS}
+\title{Quantum Tunneling}
+\author{Nishtha Tikalal}
+\date{\today}
+\end{verbatim}
+
+Start slides with:
+
+\begin{verbatim}
+\begin{document}
+\frame{\titlepage}
+\end{verbatim}
+
+Use `\frame{...}` or `\begin{frame}...\end{frame}` for each slide.
+
+\section{Animating Steps with \texttt{\textbackslash pause} and \texttt{\textbackslash onslide}}
+
+Show derivations in steps:
+
+\begin{verbatim}
+\begin{frame}{Energy Derivation}
+\begin{align*}
+T &= \frac{1}{2}mv^2 \pause \\
+  &= \frac{1}{2}m\left(\frac{dx}{dt}\right)^2
+\end{align*}
+\end{frame}
+\end{verbatim}
+
+Use `\onslide<2->` to control visibility precisely.
+
+\section{Diagrams in Presentations}
+
+You can use `tikz`, `pgfplots`, or `tikz-feynman` inside frames:
+
+\begin{verbatim}
+\begin{frame}{Free Body Diagram}
+\begin{tikzpicture}
+  \draw[fill=gray!20] (0,0) rectangle (2,1);
+  \draw[->, thick] (1,0.5) -- (1,-1) node[right] {$mg$};
+\end{tikzpicture}
+\end{frame}
+\end{verbatim}
+
+\section{Overlaying Concepts and Graphs}
+
+Beamer supports multi-stage visual explanation:
+
+\begin{verbatim}
+\begin{frame}{Projectile Motion}
+\begin{tikzpicture}
+  \draw[->] (0,0) -- (5,0) node[right] {$x$};
+  \onslide<2->{\draw[->, thick, blue] (0,0) parabola (4,2);}
+  \onslide<3->{\node at (2,1) {trajectory};}
+\end{tikzpicture}
+\end{frame}
+\end{verbatim}
+
+\section*{Try This!}
+
+\begin{itemize}
+    \item Create a 3-slide derivation of the work-energy theorem
+    \item Use `\pause` to reveal one equation at a time
+    \item Animate a diagram of circular motion
+\end{itemize}
+
+\section*{Lab Tip}
+
+Avoid overloading slides — one idea per frame. Use colors for emphasis, not decoration. Keep fonts readable (minimum 11pt) and equations centered.
+
+\section*{What’s Next}
+
+In Chapter 11, we’ll learn how to cite physics literature from journals, arXiv, and databases using BibTeX and `biblatex`.
+
+\chapter{Citing Physics Literature}
+
+\section{Using \texttt{biblatex} with \texttt{biber}}
+
+Add to your preamble:
+
+\begin{verbatim}
+\usepackage[style=numeric, backend=biber]{biblatex}
+\addbibresource{refs.bib}
+\end{verbatim}
+
+In your document:
+
+\begin{verbatim}
+As shown in \cite{einstein1905}, the mass-energy relation is...
+\end{verbatim}
+
+\printbibliography
+
+\section{Adding arXiv, DOI, and Journal References}
+
+Example entry from arXiv:
+
+\begin{verbatim}
+@article{hawking1975,
+  author = {S. W. Hawking},
+  title = {Particle Creation by Black Holes},
+  journal = {Commun. Math. Phys.},
+  volume = {43},
+  pages = {199--220},
+  year = {1975},
+  doi = {10.1007/BF02345020}
+}
+\end{verbatim}
+
+From arXiv.org:
+
+\begin{verbatim}
+@article{weinberg1967,
+  author = {Steven Weinberg},
+  title = {A Model of Leptons},
+  journal = {Phys. Rev. Lett.},
+  volume = {19},
+  year = {1967},
+  pages = {1264--1266},
+  doi = {10.1103/PhysRevLett.19.1264},
+  eprint = {arXiv:hep-ph/9601357}
+}
+\end{verbatim}
+
+\section{Bibliography Styles for Physicists}
+
+\begin{itemize}
+    \item \textbf{numeric} — [1], [2], etc.
+    \item \textbf{authoryear} — Author (Year)
+    \item \textbf{ieee}, \textbf{apsrev4-2}, \textbf{aip}
+\end{itemize}
+
+Use in preamble:
+
+\begin{verbatim}
+\usepackage[style=ieee]{biblatex}
+\end{verbatim}
+
+\section{Inline Citations and Hyperlinks}
+
+Use:
+
+\begin{verbatim}
+\usepackage[colorlinks=true,linkcolor=blue,citecolor=purple]{hyperref}
+\end{verbatim}
+
+\begin{itemize}
+    \item \verb|\cite{}| → numbered or name-based reference
+    \item \verb|\textcite{}| → inline citation: Author (Year)
+\end{itemize}
+
+\section*{Try This!}
+
+\begin{itemize}
+    \item Add 3 references: 1 from arXiv, 1 textbook, 1 peer-reviewed journal
+    \item Apply IEEE or AIP bibliography style
+    \item Insert a hyperlink to a DOI
+\end{itemize}
+
+\section*{Lab Tip}
+
+Use Zotero or JabRef to export BibTeX entries. Always verify DOIs and page ranges — especially with arXiv preprints and physics journals.
+
+\section*{What’s Next}
+
+In Chapter 12, we’ll compile a physics LaTeX cheat sheet — your go-to reference for equations, packages, and diagrams.
+
+\chapter{Physics \LaTeX{} Cheat Sheet}
+
+\section*{Essential Math Symbols and Environments}
+
+\begin{tabular}{ll}
+\verb|\frac{a}{b}| & $\frac{a}{b}$ \\
+\verb|\sqrt{x}| & $\sqrt{x}$ \\
+\verb|\sum_{n=1}^{\infty} a_n| & $\sum_{n=1}^{\infty} a_n$ \\
+\verb|\int_0^L f(x)\dd{x}| & $\int_0^L f(x)\dd{x}$ \\
+\verb|\dv{f}{x}, \pdv{f}{x}| & $\dv{f}{x}, \pdv{f}{x}$ \\
+\verb|\nabla, \grad{}, \div{}, \curl{}| & $\nabla, \grad{}, \div{}, \curl{}$ \\
+\end{tabular}
+
+\section*{Physics Package Commands}
+
+\texttt{physics}:
+\begin{itemize}
+    \item \verb|\vb{F}| → $\vb{F}$ (vectors)
+    \item \verb|\vu{i}| → $\vu{i}$ (unit vectors)
+    \item \verb|\dd{x}| → $\dd{x}$ (differentials)
+    \item \verb|\abs{x}| → $\abs{x}$ (absolute value)
+\end{itemize}
+
+\texttt{siunitx}:
+\begin{itemize}
+    \item \verb|\SI{9.81}{\meter\per\square\second}| → \SI{9.81}{\meter\per\square\second}
+    \item \verb|\num{1.602e-19}| → \num{1.602e-19}
+\end{itemize}
+
+\section*{Diagram Packages and Styles}
+
+\texttt{tikz}:
+\begin{itemize}
+    \item \verb|\draw[->] (0,0) -- (1,1);| → arrow
+    \item \verb|\node at (x,y) {label};|
+    \item Coordinate systems, field lines, mechanics setups
+\end{itemize}
+
+\texttt{pgfplots}:
+\begin{itemize}
+    \item \verb|\begin{axis}...\addplot{...};|
+    \item Graphing functions, motion curves, energy wells
+\end{itemize}
+
+\texttt{tikz-feynman}:
+\begin{itemize}
+    \item \verb|\feynmandiagram [horizontal=a to b] {...};|
+    \item Fermion lines, boson loops, QED scatterings
+\end{itemize}
+
+\section*{Common Physical Equations in LaTeX}
+
+\begin{align*}
+E &= mc^2 \\
+F &= ma \\
+\vb{F} &= q\vb{E} + q\vb{v} \times \vb{B} \\
+\vb{p} &= m\vb{v} \\
+\mathcal{L} &= T - V \quad \text{(Lagrangian)} \\
+\dv{p}{t} &= -\grad{V}
+\end{align*}
+
+\section*{Constants and Units}
+
+\begin{tabular}{ll}
+\verb|\SI{6.626e-34}{\joule\second}| & Planck's constant ($h$) \\
+\verb|\SI{1.602e-19}{\coulomb}| & Elementary charge ($e$) \\
+\verb|\SI{8.854e-12}{\farad\per\meter}| & Vacuum permittivity ($\varepsilon_0$) \\
+\verb|\SI{9.81}{\meter\per\square\second}| & Acceleration due to gravity \\
+\end{tabular}
+
+\section*{Best Practices Summary}
+
+\begin{itemize}
+    \item Use `\texttt{physics}`, `\texttt{tikz}`, and `\texttt{siunitx}` consistently
+    \item Label all figures and equations
+    \item Reference figures using `\ref{}` and cross-labels
+    \item Use display math for key derivations
+\end{itemize}
+
+\section*{Lab Tip}
+
+Keep this cheat sheet near your Overleaf or TeXStudio window as you write. You’ll internalize commands by typing them often.
+
+\section*{What’s Next}
+
+In the final chapter, we share full physics LaTeX templates for lab reports, problem sets, presentations, and theoretical notes.
+
+\chapter{Physics Templates}
+
+\section{Lab Report Template}
+
+\begin{verbatim}
+\documentclass[12pt]{article}
+\usepackage{amsmath, physics, siunitx, graphicx}
+\title{Conservation of Energy in a Pendulum}
+\author{Nishtha Tikalal}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This experiment verifies conservation of mechanical energy using a simple pendulum.
+\end{abstract}
+
+\section{Theory}
+\[
+E = K + U = \frac{1}{2}mv^2 + mgh = \text{const}
+\]
+
+\section{Method}
+\begin{itemize}
+  \item Measure pendulum height and time period
+  \item Compute velocity and potential energy
+\end{itemize}
+
+\section{Results}
+\begin{tabular}{|c|c|}
+\hline
+Height (m) & Speed (m/s) \\
+\hline
+0.50 & 3.13 \\
+\hline
+\end{tabular}
+
+\section{Conclusion}
+Mechanical energy is conserved within experimental uncertainty.
+
+\end{document}
+\end{verbatim}
+
+\section{Beamer Slide Template}
+
+\begin{verbatim}
+\documentclass{beamer}
+\usepackage{physics, tikz}
+\usetheme{Madrid}
+
+\title{Work-Energy Theorem}
+\author{Nishtha Tikalal}
+\date{}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{Statement}
+\[
+W = \Delta K = \frac{1}{2}mv^2 - \frac{1}{2}mv_0^2
+\]
+\end{frame}
+
+\begin{frame}{Free Body Diagram}
+\begin{tikzpicture}
+  \draw[fill=gray!20] (0,0) rectangle (2,1);
+  \draw[->, thick] (1,0.5) -- (1,-1) node[right] {$mg$};
+\end{tikzpicture}
+\end{frame}
+
+\end{document}
+\end{verbatim}
+
+\section{Quantum Field Theory Notes Template}
+
+\begin{verbatim}
+\documentclass[12pt]{article}
+\usepackage{amsmath, physics, tikz-feynman}
+\tikzfeynmanset{compat=1.1.0}
+
+\title{Intro to QFT: Scattering Amplitudes}
+\author{Nishtha Tikalal}
+
+\begin{document}
+\maketitle
+
+\section{Feynman Diagrams}
+\[
+\feynmandiagram [horizontal=a to b] {
+  i1 [particle=\(e^-\)] -- [fermion] a -- [fermion] i2 [particle=\(e^+\)],
+  a -- [photon] b,
+  f1 [particle=\(\mu^-\)] -- [fermion] b -- [fermion] f2 [particle=\(\mu^+\)],
+};
+\]
+
+\section{Amplitude}
+\[
+\mathcal{M} \sim \frac{e^2}{q^2}
+\]
+
+\end{document}
+\end{verbatim}
+
+\section*{Try This!}
+
+\begin{itemize}
+    \item Customize each template with your title, name, and topic
+    \item Add one figure and one equation per section
+    \item Compile on Overleaf to preview and export
+\end{itemize}
+
+\section*{What’s Next}
+
+In our final chapter, we’ll point you toward excellent LaTeX resources, physics TeX communities, and advanced package documentation.
+
+\chapter{Further Resources}
+
+\section{TikZ, PGFPLOTS, and Physics Drawing Tools}
+
+\begin{itemize}
+    \item \textbf{TikZ} — Core drawing library  
+    \url{https://tikz.dev}
+    
+    \item \textbf{PGFPLOTS} — 2D/3D graph plotting  
+    \url{https://ctan.org/pkg/pgfplots}
+    
+    \item \textbf{TikZ-Feynman} — Feynman diagram toolkit  
+    \url{https://jpellis.me/projects/tikz-feynman/}
+\end{itemize}
+
+\section{Physics Writing Templates}
+
+\begin{itemize}
+    \item Overleaf Physics Report Template  
+    \url{https://www.overleaf.com/latex/templates/physics-lab-report/zxvcpksvkfnt}
+    
+    \item APS and AIP Manuscript Templates  
+    \url{https://journals.aps.org/revtex}, \url{https://publishing.aip.org/resources/templates/}
+    
+    \item arXiv Submission Help  
+    \url{https://arxiv.org/help/submit_tex}
+\end{itemize}
+
+\section{TeX Communities and Forums}
+
+\begin{itemize}
+    \item \textbf{TeX StackExchange} (Physics-specific tags):  
+    \url{https://tex.stackexchange.com/questions/tagged/physics}
+    
+    \item \textbf{LaTeX Reddit}:  
+    \url{https://reddit.com/r/LaTeX}
+    
+    \item \textbf{Overleaf Learn}:  
+    \url{https://www.overleaf.com/learn}
+    
+    \item \textbf{TikZ Gallery}:  
+    \url{https://www.texample.net/tikz/}
+\end{itemize}
+
+\section{Reference Management}
+
+\begin{itemize}
+    \item \textbf{Zotero + Better BibTeX Plugin}
+    \item \textbf{JabRef} — Open-source BibTeX GUI  
+    \url{https://www.jabref.org}
+    
+    \item \textbf{BibGuru} — Online BibTeX generator  
+    \url{https://www.bibguru.com/latex/}
+\end{itemize}
+
+\section{Final Advice and Acknowledgments}
+
+\begin{quote}
+\textit{LaTeX is not just about formatting — it’s about communicating physics clearly, rigorously, and beautifully.}
+\end{quote}
+
+\subsection*{With Thanks To:}
+
+\begin{itemize}
+    \item TeX developers and the physics LaTeX community
+    \item Open-source authors of packages featured in this book
+    \item Students and educators who inspired this guide
+\end{itemize}
+
+\section*{License}
+
+This guide is authored by Nishtha Tikalal.  
+Licensed under Creative Commons BY-NC-SA 4.0 International.
+
+\section*{Final Challenge}
+
+\begin{itemize}
+    \item Recreate your favorite problem set or derivation using LaTeX
+    \item Submit your notes or poster using Overleaf
+    \item Teach a fellow physicist to use LaTeX!
+\end{itemize}
+
+\end{document}
