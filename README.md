@@ -3,7 +3,7 @@ Comprehensive LaTeX guide for physics, covering essential formatting, equations,
 Intended as a helpful supplement for undergraduate and research-level physics students. Covers equations, diagrams, Feynman diagrams, lab reports, and Beamer slides.
 
 View the Guide
-[Download the PDF](./physics-guide.pdf)
+[Download the PDF](./physics-guide_tikalal.pdf)
 
 License
 Creative Commons BY-NC-SA 4.0  
